@@ -43,6 +43,8 @@ def build_dataset(config):
     return train, test
 
 
+class DatasetIterater(object):
+    pass
 
 
 
