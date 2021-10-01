@@ -1,2 +1,5 @@
 数据下载：https://pan.baidu.com/s/16c93E5x373nsGozyWevITg
 最长句子：419
+句子平均长度：69.48
+75%的句子长度<102
+本次训练中pad_size=102

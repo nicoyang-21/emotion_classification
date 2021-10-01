@@ -15,7 +15,7 @@ class Config(object):
         self.num_classes = len(self.class_list)
         self.num_epochs = 3
         self.batch_size = 128
-        self.pad_len = 421
+        self.pad_size = 103  # 添加['cls']
         self.learning_rate = 5e-5
         self.bert_path = './bert_model'
         self.tokenizer = BertTokenizer.from_pretrained(self.bert_path)
