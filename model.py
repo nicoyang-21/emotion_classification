@@ -6,6 +6,7 @@ from transformers import BartModel, BertTokenizer
 
 class Config(object):
     """配置参数"""
+
     def __init__(self, path):
         self.dataset_path = path + '/simplifyweibo_4_moods.csv'
         self.class_list = [x.strip() for x in open(path + '/class.txt').readlines()]
@@ -20,6 +21,25 @@ class Config(object):
         self.bert_path = './bert_model'
         self.tokenizer = BertTokenizer.from_pretrained(self.bert_path)
         self.hidden_size = 768
+
+
+class Model(nn.Module):
+    def __init__(self, config):
+        super(Model, self).__init__()
+        self.bert = BartModel.from_pretrained(config.bert_path)
+        for param in self.bert.paramters:
+            param.requires_grad = True
+        self.fc = nn.Linear(config.hidden_size, config.num_classes)
+
+    def forward(self, x):
+        context = x[0]
+        mask = x[2]
+        _, pooled = self.bert(context, attention_mask=mask, return_dict=False)
+        output = self.fc(pooled)
+        return output
+
+
+
 
 
 
