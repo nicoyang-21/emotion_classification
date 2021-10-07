@@ -46,7 +46,7 @@ def build_dataset(config):
                     mask = [1] * pad_size
                     token_id = token_id[:pad_size]
                     seq_len = pad_size
-            contents.append((token_id, label, seq_len, mask))
+            contents.append((token_id, int(label), seq_len, mask))
         return contents
 
     train_content, train_label, test_content, test_label, eval_content, eval_label = data_split(config.dataset_path)
@@ -68,10 +68,10 @@ class DatasetIterater(object):
         self.device = device
 
     def _to_tensor(self, data):
-        x = torch.LongTensor(_[0] for _ in data).to(self.device)
-        y = torch.LongTensor(_[1] for _ in data).to(self.device)
-        seq_len = torch.LongTensor(_[2] for _ in data).to(self.device)
-        mask = torch.LongTensor(_[3] for _ in data).to(self.device)
+        x = torch.LongTensor([_[0] for _ in data]).to(self.device)
+        y = torch.LongTensor([_[1] for _ in data]).to(self.device)
+        seq_len = torch.LongTensor([_[2] for _ in data]).to(self.device)
+        mask = torch.LongTensor([_[3] for _ in data]).to(self.device)
         return (x, seq_len, mask), y
 
     def __next__(self):
@@ -86,6 +86,7 @@ class DatasetIterater(object):
         else:
             batches = self.batches[self.index * self.batch_size: (self.index + 1) * self.batch_size]
             self.index += 1
+            batches = self._to_tensor(batches)
             return batches
 
     def __iter__(self):

@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from transformers import BartModel, BertTokenizer
+from transformers import BertModel, BertTokenizer
 
 
 class Config(object):
@@ -11,7 +11,7 @@ class Config(object):
         self.class_list = [x.strip() for x in open(path + '/class.txt').readlines()]
         self.save_path = path + '/bert.pt'
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.require_improvement = 1000
+        self.require_improvement = 2000
         self.num_classes = len(self.class_list)
         self.num_epochs = 3
         self.batch_size = 128
@@ -25,8 +25,8 @@ class Config(object):
 class Model(nn.Module):
     def __init__(self, config):
         super(Model, self).__init__()
-        self.bert = BartModel.from_pretrained(config.bert_path)
-        for param in self.bert.parameters:
+        self.bert = BertModel.from_pretrained(config.bert_path)
+        for param in self.bert.parameters():
             param.requires_grad = True
         self.fc = nn.Linear(config.hidden_size, config.num_classes)
 
