@@ -1,4 +1,2 @@
-喜悦
-愤怒
-厌恶
-低落
+positive
+negative

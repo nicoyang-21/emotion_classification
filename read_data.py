@@ -5,13 +5,15 @@ import pandas as pd
 import torch
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
-from model import Config
 
 PAD, CLS = '[PAD]', '[CLS]'  # padding符号, bert中综合信息符号
 
 
 def data_split(path):
     data = pd.read_csv(path)
+    for i, j in enumerate(data['label']):
+        if j in [1, 2, 3]:
+            data['label'][i] = 1
     content = data['review']
     label = data['label']
     train_content, test_content_t, train_label, test_label_t = train_test_split(content, label, test_size=0.2,
@@ -25,12 +27,12 @@ def data_split(path):
     return train_content, train_label, test_content, test_label, eval_content, eval_label
 
 
-def build_dataset(config: Config):
+def build_dataset(config):
     def load_dataset(content, label, pad_size=config.pad_size):
         contents = []
         for line, label in tqdm(zip(content, label)):
-            lin = line.strip()
-            token = config.tokenizer.tokenize(content)
+            line = line.strip()
+            token = config.tokenizer.tokenize(line)
             token = [CLS] + token
             seq_len = len(token)
             mask = []
