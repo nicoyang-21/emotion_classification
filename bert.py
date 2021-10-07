@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from transformers import BartModel, BertTokenizer
 
 
@@ -27,7 +26,7 @@ class Model(nn.Module):
     def __init__(self, config):
         super(Model, self).__init__()
         self.bert = BartModel.from_pretrained(config.bert_path)
-        for param in self.bert.paramters:
+        for param in self.bert.parameters:
             param.requires_grad = True
         self.fc = nn.Linear(config.hidden_size, config.num_classes)
 
