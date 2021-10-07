@@ -13,7 +13,7 @@ class Config(object):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.require_improvement = 2000
         self.num_classes = len(self.class_list)
-        self.num_epochs = 3
+        self.num_epochs = 100
         self.batch_size = 128
         self.pad_size = 103  # 添加['cls']
         self.learning_rate = 5e-5

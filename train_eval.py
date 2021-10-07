@@ -30,7 +30,7 @@ def train(config, model, train_iter, dev_iter, test_iter):
             loss = F.cross_entropy(outputs, labels)
             loss.backward()
             optimizer.step()
-            if total_batch % 500 == 0:
+            if total_batch % 2000 == 0:
                 true = labels.data.cpu()
                 predict = torch.max(outputs.data, 1)[1].cpu()
                 train_acc = metrics.accuracy_score(true, predict)
