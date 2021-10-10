@@ -1,8 +1,6 @@
 import argparse
 
 import torch
-from transformers import BertTokenizer
-from bert import Model
 from importlib import import_module
 
 parser = argparse.ArgumentParser(description='Chinese test classification')
