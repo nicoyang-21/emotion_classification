@@ -7,7 +7,7 @@ class Config(object):
     """配置参数"""
 
     def __init__(self, path):
-        self.dataset_path = path + '/simplifyweibo_4_moods.csv'
+        self.dataset_path = path + '/weibo_senti_100k.csv'
         self.class_list = [x.strip() for x in open(path + '/class.txt').readlines()]
         self.save_path = path + '/bert.pt'
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -17,7 +17,7 @@ class Config(object):
         self.batch_size = 128
         self.pad_size = 99  # 添加['cls']
         self.learning_rate = 2e-5
-        self.bert_path = './bert_model'
+        self.bert_path = './emotion_classification/bert_model'
         self.tokenizer = BertTokenizer.from_pretrained(self.bert_path)
         self.hidden_size = 768
 

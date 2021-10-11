@@ -1,11 +1,5 @@
-import argparse
-
 import torch
-from importlib import import_module
-
-parser = argparse.ArgumentParser(description='Chinese test classification')
-parser.add_argument('--model', type=str, required=True, help='choose a model: Bert')
-args = parser.parse_args(['--model', 'bert'])
+from emotion_classification import bert
 
 PAD, CLS = '[PAD]', '[CLS]'  # padding符号, bert中综合信息符号
 
@@ -32,11 +26,9 @@ def deal_message(message, config):
 
 
 def sentiment(message):
-    path = './data'
-    model_name = args.model
-    x = import_module(model_name)
-    config = x.Config(path)
-    model = x.Model(config).to(config.device)
+    path = './emotion_classification/data'
+    config = bert.Config(path)
+    model = bert.Model(config).to(config.device)
     model.load_state_dict(torch.load(config.save_path))
     model.eval()
     context = deal_message(message, config)
