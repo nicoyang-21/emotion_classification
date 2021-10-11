@@ -31,8 +31,7 @@ def deal_message(message, config):
     return token_id, seq_len, mask
 
 
-if __name__ == '__main__':
-    message = input('请输入一句话：')
+def sentiment(message):
     path = './data'
     model_name = args.model
     x = import_module(model_name)
@@ -49,4 +48,4 @@ if __name__ == '__main__':
     result_score = float(torch.max(res.data, 1)[0])
     label = res_dict[result_index]
     output = {'intent': label, 'confidence': result_score}
-    print(output)
+    return output
